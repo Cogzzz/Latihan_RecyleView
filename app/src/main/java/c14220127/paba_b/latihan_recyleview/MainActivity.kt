@@ -16,14 +16,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main)
-
-        // Inisialisasi RecyclerView dan Adapter
         recyclerView = findViewById(R.id.recyclerView)
         taskAdapter = TaskAdapter(tasks)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = taskAdapter
 
-        // Menangani tombol FAB untuk membuka AddTaskActivity
         val fabAddTask = findViewById<FloatingActionButton>(R.id.fabAddTask)
         fabAddTask.setOnClickListener {
             val intent = Intent(this, AddTaskActivity::class.java)
@@ -52,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val REQUEST_CODE_ADD_TASK = 1 // Definisikan request code untuk identifikasi
+        private const val REQUEST_CODE_ADD_TASK = 1
     }
 }
 

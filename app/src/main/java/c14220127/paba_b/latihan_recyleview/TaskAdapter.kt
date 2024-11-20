@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
 class TaskAdapter(private val tasks: MutableList<Task>) :
@@ -54,11 +53,6 @@ class TaskAdapter(private val tasks: MutableList<Task>) :
                 task.isInProgress = false // Stop progress
                 notifyItemChanged(position)
             }
-        }
-
-        // Set listener untuk tombol ubah
-        holder.btnUbah.setOnClickListener {
-            // Logika untuk tombol ubah, jika perlu
         }
 
         // Set listener untuk tombol hapus
