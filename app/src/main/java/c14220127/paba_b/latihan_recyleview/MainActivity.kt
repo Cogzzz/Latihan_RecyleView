@@ -1,6 +1,5 @@
 package c14220127.paba_b.latihan_recyleview
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -18,19 +17,45 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main)
 
-        val fabAddTask = findViewById<FloatingActionButton>(R.id.fabAddTask)
-        fabAddTask.setOnClickListener {
-            val intent = Intent(this, AddTaskActivity::class.java)
-            startActivity(intent)
-        }
-
+        // Inisialisasi RecyclerView dan Adapter
         recyclerView = findViewById(R.id.recyclerView)
         taskAdapter = TaskAdapter(tasks)
-
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = taskAdapter
 
+        // Menangani tombol FAB untuk membuka AddTaskActivity
+        val fabAddTask = findViewById<FloatingActionButton>(R.id.fabAddTask)
+        fabAddTask.setOnClickListener {
+            val intent = Intent(this, AddTaskActivity::class.java)
+            startActivityForResult(intent, REQUEST_CODE_ADD_TASK) // Menggunakan startActivityForResult
+        }
+    }
+
+    // Menangani hasil dari AddTaskActivity
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_CODE_ADD_TASK && resultCode == RESULT_OK) {
+            // Ambil data dari intent yang dikembalikan
+            val taskName = data?.getStringExtra("taskName") ?: ""
+            val taskDate = data?.getStringExtra("taskDate") ?: ""
+            val taskCategory = data?.getStringExtra("taskCategory") ?: ""
+            val taskDescription = data?.getStringExtra("taskDescription") ?: ""
+
+            // Menambahkan data baru ke dalam list
+            val newTask = Task(taskName, taskDate, taskCategory, taskDescription)
+            tasks.add(newTask)
+
+            // Memberitahukan adapter bahwa data baru telah ditambahkan
+            taskAdapter.notifyItemInserted(tasks.size - 1)
+        }
+    }
+
+    companion object {
+        private const val REQUEST_CODE_ADD_TASK = 1 // Definisikan request code untuk identifikasi
     }
 }
+
+
 
 

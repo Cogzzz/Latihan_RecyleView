@@ -2,13 +2,16 @@ package c14220127.paba_b.latihan_recyleview
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 
 class AddTaskActivity : AppCompatActivity() {
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.form_task)
@@ -20,22 +23,14 @@ class AddTaskActivity : AppCompatActivity() {
         val btnSave: Button = findViewById(R.id.btnSave)
 
         btnSave.setOnClickListener {
-            val name = etTaskName.text.toString()
-            val date = etDate.text.toString()
-            val category = etCategory.text.toString()
-            val description = etDescription.text.toString()
-
-            if (name.isNotEmpty() && date.isNotEmpty() && category.isNotEmpty() && description.isNotEmpty()) {
-                val task = Task(name, date, category, description)
-
-                // Kirim data kembali ke MainActivity
-                val intent = Intent()
-                intent.putExtra("EXTRA_TASK", task)
-                setResult(Activity.RESULT_OK, intent)
-                finish()
-            } else {
-                Toast.makeText(this, "Harap isi semua bidang!", Toast.LENGTH_SHORT).show()
+            val intent = Intent().apply {
+                putExtra("taskName", etTaskName.text.toString())
+                putExtra("taskDate", etDate.text.toString())
+                putExtra("taskCategory", etCategory.text.toString())
+                putExtra("taskDescription", etDescription.text.toString())
             }
+            setResult(RESULT_OK, intent)
+            finish()
         }
     }
 }

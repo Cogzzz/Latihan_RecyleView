@@ -7,7 +7,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class TaskAdapter(private val tasks: List<Task>) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
+class TaskAdapter(private val tasks: List<Task>) :
+    RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvTaskName: TextView = itemView.findViewById(R.id.tvTaskName)
@@ -29,5 +30,6 @@ class TaskAdapter(private val tasks: List<Task>) : RecyclerView.Adapter<TaskAdap
         holder.tvTaskDescription.text = task.description
     }
 
-    override fun getItemCount() = tasks.size
+    override fun getItemCount(): Int = tasks.size
 }
+
